@@ -1,0 +1,58 @@
+1)
+SELECT M.name
+FROM meal M
+WHERE EXISTS(
+    SELECT 1
+    FROM ingredient I
+    WHERE I.meal_id = M.id AND I.name = 'garlic'
+    );
+
+2)
+SELECT COUNT(DISTRICT M.id)
+FROM MEAL M
+WHERE EXISTS(
+    SELECT 1
+    FROM ingredient I
+    WHERE I.meal_id = M.id AND I.is_vegetarian = 1
+    );
+
+3)
+SELECT DISTINCT M.name
+FROM meal M
+WHERE EXISTS(
+    SELECT 1
+    FROM ingredient I
+    WHERE I.meal_id = M.id AND I.is_vegan = 1
+    );
+
+4)
+SELECT AVG(ingredient_count)
+FROM(
+       SELECT M.id, COUNT(I.id)
+       FROM meal M
+       LEFT JOIN ingredient I ON M.id = I.meal_id
+       GROUP BY M.id
+       ) AS subquery;
+
+5)
+SELECT M.name
+FROM meal M
+WHERE(
+        SELECT COUNT(I.id)
+        FROM ingredient I
+        WHERE I.meal_id
+        ) >3;
+
+
+6) INNER JOIN between customer and order tables
+
+SELECT CUSTOMER.NAME, CUSTOMER.ADDRESS, ORDER.ORDER_ID,ORDER.ORDER_DATE,ORDER.TOTAL_COST
+FROM customer
+INNER JOIN 'ORDER' ON CUSTOMER.CUSTOMER_ID = 'ORDER'.CUSTOMER_ID;
+
+7)INNER JOIN between product and inventory tables
+
+SELECT PRODUCT.NAME, PRODUCT.PRICE, INVENTORY.STORE_ID, INVENTORY QUANTITY
+FROM product
+INNER JOIN INVENTORY ON PRODUCT.PRODUCT_ID = INVENTORY.PRODUCT_ID;
+
